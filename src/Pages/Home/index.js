@@ -1,10 +1,28 @@
+import { useState } from "react";
 import styled from "styled-components";
-import { flexAlignCenter, flexCenter } from "../../Styles/common";
+import { flexCenter } from "../../Styles/common";
 import HomePageStyling from "./Styling";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
-    const inputChange = (e) => {
-        return e.target.value;
+    const [isSearchText, setIsSearchText] = useState();
+    const navigate = useNavigate();
+
+    const onSearchText = (e) => {
+        setIsSearchText(e.target.value);
+    };
+
+    const onNextPage = (e) => {
+        if (e.key === "Enter") {
+            onGoPage();
+        }
+    };
+
+    const onGoPage = () => {
+        const splitText = isSearchText.split("/");
+        const owner = splitText[3];
+        const repository = splitText[4];
+        navigate(`/${owner}/${repository}/1/created/10`);
     };
 
     return (
@@ -21,7 +39,8 @@ function HomePage() {
                 <input
                     type="text"
                     placeholder="링크를 붙여보세요."
-                    onChange={inputChange}
+                    onChange={onSearchText}
+                    onKeyDown={onNextPage}
                 ></input>
             </div>
 
@@ -41,6 +60,7 @@ const HomeContainer = styled.div`
         background: ${({ theme }) => theme.PALETTE.black};
         color: ${({ theme }) => theme.PALETTE.white};
     }
+
     & > div:first-child > h2 {
         margin-bottom: 2rem;
     }

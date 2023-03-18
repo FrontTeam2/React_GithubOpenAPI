@@ -15,10 +15,10 @@ const router = createBrowserRouter([
             },
 
             {
-                path: "/",
+                path: "/:owner/:repository/:page/:sort/:per_page",
                 element: <MainPage />,
             },
-            { path: "/", element: <DetailPage /> },
+            { path: "/:owner/:repository/:number", element: <DetailPage /> },
         ],
     },
 ]);

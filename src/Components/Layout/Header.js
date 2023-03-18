@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import { flexAlignCenter, MarginAuto } from "../../Styles/common";
+import { useDispatch, useSelector } from "react-redux";
 
 function Header() {
     return (
         <S.HeaderBar>
-            <img
-                src={`${process.env.PUBLIC_URL}/github.png`}
-                alt="github_logo"
-            />
+            <a href="/">
+                <img
+                    src={`${process.env.PUBLIC_URL}/github.png`}
+                    alt="github_logo"
+                />
+            </a>
             <div>
                 <h1>REPOSITORY</h1>
                 <p>WELCOME TO HELL</p>
@@ -25,9 +28,15 @@ const HeaderBar = styled.header`
     max-width:120rem;
     ${flexAlignCenter}
 
-    & > img {
+    & > a > img {
         margin-right: 1rem;
         width: 5rem;
+        border-radius: 1rem;
+        box-sizing: border-box;
+    }
+
+    & > div > h1 {
+        margin-bottom: 0.5rem;
     }
 `;
 
