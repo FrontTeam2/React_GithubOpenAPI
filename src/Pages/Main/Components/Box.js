@@ -2,13 +2,29 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { flexAlignCenter, flexBetween } from "../../../Styles/common";
 
-function IssueBox({ number, title, body, commentsLen, userName, updatedAt }) {
+function IssueBox({
+    number,
+    title,
+    body,
+    labels,
+    commentsLen,
+    userName,
+    updatedAt,
+}) {
     const { owner, repository } = useParams();
     const navigate = useNavigate();
 
     return (
         <S.IssueBoxList
-            onClick={() => navigate(`/${owner}/${repository}/${number}`)}
+            onClick={() =>
+                navigate(`/${owner}/${repository}/${number}`, {
+                    state: {
+                        userName: userName,
+                        commentsLen: commentsLen,
+                        labels: labels,
+                    },
+                })
+            }
         >
             <div>
                 <p>{number}</p>
@@ -41,6 +57,7 @@ const IssueBoxList = styled.li`
 
     & > div:first-child {
         ${flexBetween}
+        ${flexAlignCenter}
         text-align: center;
     }
 

@@ -6,6 +6,7 @@ import { getIssues } from "../../Store/issues";
 import { MarginAuto } from "../../Styles/common";
 import IssueBox from "./Components/Box";
 import LoadingPage from "../../Components/Loading";
+import SortFilter from "./Components/Sort";
 
 function MainPage() {
     const issues = useSelector((store) => store.issue.issues);
@@ -31,28 +32,32 @@ function MainPage() {
             {getIssueState.loading ? (
                 <LoadingPage />
             ) : (
-                <S.ListBox>
-                    {issues.map((issue, index) => {
-                        return (
-                            <IssueBox
-                                key={index}
-                                number={issue.number}
-                                title={issue.title}
-                                body={
-                                    issue.body
-                                        ? issue.body
-                                              .split("")
-                                              .splice(0, 99)
-                                              .join("") + "..."
-                                        : issue.body
-                                }
-                                userName={issue.user.login}
-                                commentsLen={issue.comments}
-                                updatedAt={issue.updated_at}
-                            />
-                        );
-                    })}
-                </S.ListBox>
+                <>
+                    <SortFilter />
+                    <S.ListBox>
+                        {issues.map((issue, index) => {
+                            return (
+                                <IssueBox
+                                    key={index}
+                                    labels={issue.labels}
+                                    number={issue.number}
+                                    title={issue.title}
+                                    body={
+                                        issue.body
+                                            ? issue.body
+                                                  .split("")
+                                                  .splice(0, 99)
+                                                  .join("") + "..."
+                                            : issue.body
+                                    }
+                                    userName={issue.user.login}
+                                    commentsLen={issue.comments}
+                                    updatedAt={issue.updated_at}
+                                />
+                            );
+                        })}
+                    </S.ListBox>
+                </>
             )}
         </>
     );
@@ -64,6 +69,7 @@ const ListBox = styled.ul`
     width: 95%;
     ${MarginAuto}
     max-width: 120rem;
+    margin-bottom: 2rem;
 `;
 
 const S = {

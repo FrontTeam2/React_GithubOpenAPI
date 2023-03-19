@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IssuesAPI } from "../Apis/issues";
 
 const initialState = {
-    issue: [],
+    issue: {},
     getAnIssuesState: {
         loading: false,
         done: false,

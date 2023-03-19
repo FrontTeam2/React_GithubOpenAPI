@@ -17,9 +17,7 @@ export const flexCenter = css`
 `;
 
 export const flexBetween = css`
-    display: flex;
     justify-content: space-between;
-    align-items: center;
 `;
 
 export const flexAlignCenter = css`
