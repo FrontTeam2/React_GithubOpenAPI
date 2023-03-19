@@ -14,10 +14,10 @@
 ## 과제 기간 : 3월 13일 (월) ~ 3월 19일 (일)
 
 ## 이슈 조회 사이트 UI
-![1](https://user-images.githubusercontent.com/77373566/226191775-053a1ef2-11da-4d75-9948-de583adddb46.png)
-![2](https://user-images.githubusercontent.com/77373566/226191786-f56efb1a-6f0f-444a-9e6c-117db4922c54.png)
-![3](https://user-images.githubusercontent.com/77373566/226191788-56fc2348-ffc0-4651-be4d-9518d68ecb2e.png)
-![4](https://user-images.githubusercontent.com/77373566/226191789-d4078a7b-a5fa-4406-8b82-bd69a1f57310.png)
+![1](https://user-images.githubusercontent.com/77373566/226195293-ec4e1e44-1d72-47a8-bead-64a382ac3f6e.png)
+![2](https://user-images.githubusercontent.com/77373566/226195295-8199509d-29bb-4209-8000-3153f7b9f5d1.png)
+![3](https://user-images.githubusercontent.com/77373566/226195296-2f4e5333-28b8-4c68-ba69-8962480a0389.png)
+![4](https://user-images.githubusercontent.com/77373566/226195299-d7381501-a761-4a24-9b74-10a1caa480dd.png)
 
 ┌ UX를 고려하여 마지막 단계인 디테일 페이지에서 리스트로 다시 돌려보내는 navigation용 배너
 
