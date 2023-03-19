@@ -8,7 +8,18 @@ function IssueBox({ number, title, body, commentsLen, userName, updatedAt }) {
 
     return (
         <S.IssueBoxList
-            onClick={() => navigate(`/${owner}/${repository}/${number}`)}
+            onClick={() =>
+                navigate(`/${owner}/${repository}/${number}`, {
+                    state: {
+                        title: title,
+                        number: number,
+                        body: body,
+                        commentsLen: commentsLen,
+                        userName: userName,
+                        updatedAt: updatedAt,
+                    },
+                })
+            }
         >
             <div>
                 <p>{number}</p>

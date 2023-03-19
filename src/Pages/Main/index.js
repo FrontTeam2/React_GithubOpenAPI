@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getIssues } from "../../Store/issues";
 import { MarginAuto } from "../../Styles/common";
@@ -12,7 +12,6 @@ function MainPage() {
     console.log(issues);
     const getIssueState = useSelector((store) => store.issue.getIssuesState);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const { owner, repository, page, sort, per_page } = useParams();
     console.log(owner, repository, page, sort, per_page);
@@ -36,6 +35,7 @@ function MainPage() {
                     {issues.map((issue, index) => {
                         return (
                             <IssueBox
+                                key={index}
                                 number={issue.number}
                                 title={issue.title}
                                 body={
