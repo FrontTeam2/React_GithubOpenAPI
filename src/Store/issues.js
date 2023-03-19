@@ -10,6 +10,12 @@ const initialState = {
     },
 };
 
+/**
+ * @param string owner - 소유자명
+ *
+ *
+ */
+
 export const getIssues = createAsyncThunk(
     "issue/getIssues",
     async ({ owner, repository, params }) => {

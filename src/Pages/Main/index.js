@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { getIssues } from "../../Store/issues";
 import { MarginAuto } from "../../Styles/common";
 import IssueBox from "./Components/Box";
+import LoadingPage from "../../Components/Loading";
 
 function MainPage() {
     const issues = useSelector((store) => store.issue.issues);
@@ -27,25 +28,33 @@ function MainPage() {
     }, [getData]);
 
     return (
-        <S.ListBox>
-            {issues.map((issue, index) => {
-                return (
-                    <IssueBox
-                        number={issue.number}
-                        title={issue.title}
-                        body={
-                            issue.body
-                                ? issue.body.split("").splice(0, 99).join("") +
-                                  "..."
-                                : issue.body
-                        }
-                        userName={issue.user.login}
-                        commentsLen={issue.comments}
-                        updatedAt={issue.updated_at}
-                    />
-                );
-            })}
-        </S.ListBox>
+        <>
+            {getIssueState.loading ? (
+                <LoadingPage />
+            ) : (
+                <S.ListBox>
+                    {issues.map((issue, index) => {
+                        return (
+                            <IssueBox
+                                number={issue.number}
+                                title={issue.title}
+                                body={
+                                    issue.body
+                                        ? issue.body
+                                              .split("")
+                                              .splice(0, 99)
+                                              .join("") + "..."
+                                        : issue.body
+                                }
+                                userName={issue.user.login}
+                                commentsLen={issue.comments}
+                                updatedAt={issue.updated_at}
+                            />
+                        );
+                    })}
+                </S.ListBox>
+            )}
+        </>
     );
 }
 

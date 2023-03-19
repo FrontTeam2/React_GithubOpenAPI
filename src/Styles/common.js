@@ -27,6 +27,20 @@ export const flexAlignCenter = css`
     align-items: center;
 `;
 
+export const gridTemplate = css`
+    display: grid;
+    justify-items: center;
+    align-items: center;
+`;
+
+export const gridColumnTwo = css`
+    grid-template-columns: repeat(2, 1fr);
+`;
+
+export const gridColumnOne = css`
+    grid-template-columns: repeat(1, 1fr);
+`;
+
 export const MarginAuto = css`
     margin: 0 auto;
 `;
