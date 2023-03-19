@@ -111,6 +111,10 @@ const BodyContents = styled.div`
     border-radius: 1rem;
     padding: 2rem;
     overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const BodyContHd = styled.div`
