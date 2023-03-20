@@ -1,40 +1,39 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { IssuesAPI } from '../Apis/issues'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import IssueApi from "../apis/issueApi";
 
 const initialState = {
-	issue: {},
-	getAnIssueState: {
-		loading: false,
-		done: false,
-		err: null,
-	},
-}
+    issues: [],
+    getIssueState: {
+        loading: false,
+        done: false,
+        err: null,
+    },
+};
+export const getIssue = createAsyncThunk(
+    "issue/getIssue",
+    async ({ owner, repository, params }) => {
+        const res = await IssueApi.getIssue(owner, repository, params);
+        return res.data;
+    }
+);
 
-export const getAnIssue = createAsyncThunk(
-	'issue/getAnIssue',
-	async ({ owner, repository, number }) => {
-		const res = await IssuesAPI.getAnIssue(owner, repository, number)
-		return res.data
-	},
-)
-
-export const anIssueSlice = createSlice({
-	name: 'anIssue',
-	initialState,
-	extraReducers: builder => {
-		builder.addCase(getAnIssue.pending, state => {
-			state.getAnIssueState.loading = true
-		})
-		builder.addCase(getAnIssue.fulfilled, (state, action) => {
-			state.issue = action.payload
-			state.getAnIssueState.loading = false
-			state.getAnIssueState.done = true
-			state.getAnIssueState.err = null
-		})
-		builder.addCase(getAnIssue.rejected, (state, action) => {
-			state.getAnIssueState.loading = false
-			state.getAnIssueState.done = true
-			state.getAnIssueState.err = action.payload
-		})
-	},
-})
+export const issueSlice = createSlice({
+    name: "issue",
+    initialState,
+    extraReducers: (builder) => {
+        builder.addCase(getIssue.pending, (state) => {
+            state.getIssueState.loading = true;
+        });
+        builder.addCase(getIssue.fulfilled, (state, action) => {
+            state.issues = action.payload;
+            state.getIssueState.loading = false;
+            state.getIssueState.done = true;
+            state.getIssueState.err = null;
+        });
+        builder.addCase(getIssue.rejected, (state, action) => {
+            state.getIssueState.loading = false;
+            state.getIssueState.done = true;
+            state.getIssueState.err = action.payload;
+        });
+    },
+});
