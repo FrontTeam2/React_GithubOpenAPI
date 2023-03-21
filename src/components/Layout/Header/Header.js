@@ -1,29 +1,45 @@
 import styled from '@emotion/styled'
-import { FlexAlignCSS, HoverCSS } from '../../Styles/common'
+import { FlexAlignCSS, HoverCSS } from '../../../styles/common'
 import { BiSearchAlt } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { searchActions } from '../../Stores/search'
 import { useNavigate } from 'react-router-dom'
+import { searchActions } from 'store/search'
 
 function Header() {
-	const dispatch = useDispatch()
-	const searchText = useSelector(store => store.search.text)
-	const [writeText, setWriteText] = useState('')
-	const navigate = useNavigate()
+	const dispatch = useDispatch() // dispatch를 이용한 response 전달
+	const navigate = useNavigate() // url 경로 이동용 내비게이션
 
+	/**
+	 *  검색한 텍스트 state
+	 */
+	const searchText = useSelector(store => store.search.text)
+
+	//적은 텍스트 state
+	const [writeText, setWriteText] = useState('')
+
+	// 검색구간에 텍스트가 변경될때마다 실행
 	useEffect(() => {
 		setWriteText(searchText)
 	}, [searchText])
 
+	/**
+	 * Enter키 입력으로 검색 요청 보내기
+	 */
 	const handleKeyPress = e => {
 		if (e.key === 'Enter') {
 			onSubmitSearchText()
 		}
 	}
 
+	/**
+	 * 텍스트가 변경됨에 따라 writeText 변경
+	 */
 	const onChangeSearchText = e => setWriteText(e.target.value)
 
+	/**
+	 * 입력한 텍스트로 Issue 검색 (기본 : 1페이지, 생성순, 10개)
+	 */
 	const onSubmitSearchText = () => {
 		dispatch(searchActions.editSearchText(writeText))
 		const splitText = writeText.split('/')
@@ -41,9 +57,9 @@ function Header() {
 					alt="logo"
 				/>
 				<S.Text>
-					이슈를
+					주홍아
 					<br />
-					보넷
+					공부햇
 				</S.Text>
 				<S.InputBox>
 					<S.Input
@@ -66,6 +82,9 @@ const Wrapper = styled.div`
 	width: 100%;
 	padding: 10px 0;
 	border-bottom: 2px solid ${({ theme }) => theme.PALETTE.gray[200]};
+	top: 0px;
+	position: sticky;
+	background-color: white;
 `
 const Container = styled.div`
 	width: 60%;

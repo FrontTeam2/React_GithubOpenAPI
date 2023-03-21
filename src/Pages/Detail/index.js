@@ -1,29 +1,45 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
-import Loading from '../../Components/Loading'
-import { getAnIssue } from '../../Stores/issue'
-import { FlexAlignCSS, FlexColumnCSS } from '../../Styles/common'
+import Loading from 'components/Layout/Loading/Loading'
+import { getIssue } from '../../store/issue'
+import { FlexAlignCSS, FlexColumnCSS } from '../../styles/common'
 
 const COLORS = ['orange', 'yellow', 'pink', 'aqua', 'coral', 'lightgreen']
 
 function DetailPage() {
-	const { owner, repository, number } = useParams()
-	const anIssue = useSelector(store => store.anIssue.issue)
-	const getAnIssueState = useSelector(store => store.anIssue.getAnIssueState)
-	const dispatch = useDispatch()
+	const dispatch = useDispatch() // dispatch를 이용한 response 전달
+	const anIssue = useSelector(store => store.issue.issue) // issue 선택
+	const getIssueState = useSelector(store => store.issue.getIssueState) // issue 로딩 상태창 관리
 
-	useEffect(() => {
-		dispatch(getAnIssue({ owner, repository, number }))
+	/**
+	 * @param {String} owner - 소유자
+	 * @param {String} repository - 레포지토리
+	 * @param {number} id - Issue 고유번호
+	 */
+	const { owner, repository, id } = useParams()
+
+	// 데이터를 받아서 보내주기
+	const getData = useCallback(async () => {
+		dispatch(getIssue({ owner, repository, id }))
 	}, [])
+
+	// 상세페이지 조회하기
+	useEffect(() => {
+		if (getIssueState.loading === true) {
+		}
+		getData()
+	}, [getData])
+
+	console.log(anIssue)
 
 	return (
 		<>
-			{getAnIssueState.loading ? (
+			{getIssueState.loading ? (
 				<Loading />
 			) : (
 				<S.Wrapper>
@@ -31,6 +47,12 @@ function DetailPage() {
 						<S.Number># {anIssue.number}</S.Number>
 						<S.Title>{anIssue.title}</S.Title>
 						<S.Line>
+							<ImgArea>
+								<p>{anIssue.user.login}</p>
+								<ImgBox>
+									<Img src={anIssue.user.avatar_url}></Img>
+								</ImgBox>
+							</ImgArea>
 							<S.Box>
 								<ReactMarkdown remarkPlugins={[remarkGfm]}>
 									{anIssue.body}
@@ -105,7 +127,7 @@ const Number = styled.span`
 `
 
 const Line = styled.div`
-	margin-top: 20px;
+	margin: 20px 0;
 	${FlexAlignCSS}
 	align-items: flex-start;
 `
@@ -151,6 +173,25 @@ const Item = styled.div`
 	padding: 1px 5px;
 	margin-top: 3px;
 	margin-right: 3px;
+`
+
+const ImgArea = styled.div`
+	width: 15%;
+	display: flex;
+	align-items: center;
+`
+
+const ImgBox = styled.div`
+	width: 25px;
+	height: 25px;
+	overflow: hidden;
+	margin: 0 10px;
+`
+
+const Img = styled.img`
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 `
 
 const S = {

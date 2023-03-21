@@ -6,18 +6,37 @@ import {
 	FlexColumnCSS,
 	HoverCSS,
 	ShadowCSS,
-} from '../../../Styles/common'
+} from '../../../styles/common'
 import { BsChat } from 'react-icons/bs'
 import remarkGfm from 'remark-gfm'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { getIssue } from 'store/issue'
 
-function IssueBox({ number, title, body, commentLen, updatedAt }) {
-	const { owner, repository } = useParams()
+function IssueBox({
+	owner,
+	repository,
+	number,
+	title,
+	body,
+	commentLen,
+	updatedAt,
+}) {
+	// console.log(typeof updatedAt)
+	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
+	// 카드 클릭 => 상세페이지로 이동
+	const ClickCard = id => {
+		console.log('🔴🔴🔴🔴🔴🔴🔴')
+		console.log(id)
+		dispatch(getIssue({ owner, repository, id }))
+		navigate(`/${owner}/${repository}/${id}`)
+	}
+
 	return (
-		<S.Wrapper onClick={() => navigate(`/${owner}/${repository}/${number}`)}>
+		<S.Wrapper onClick={() => ClickCard(number)}>
 			<S.LineContainer
 				css={css`
 					align-items: flex-start;
@@ -73,10 +92,6 @@ const Wrapper = styled.div`
 	:hover {
 		background-color: var(--color-purple);
 	}
-	@media screen and (max-width: 830px) {
-		padding: 8px;
-		padding-top: 20px;
-	}
 `
 const LineContainer = styled.div`
 	${FlexAlignCSS}
@@ -108,7 +123,6 @@ const BoldText = styled(Text)`
 `
 const Title = styled(Text)`
 	font-weight: bold;
-	width: 90%;
 `
 const IconBox = styled.div`
 	${HoverCSS}
